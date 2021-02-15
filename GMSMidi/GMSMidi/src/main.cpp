@@ -9,6 +9,7 @@ public:
 	int add(T item);
 	int remove(int id);
 	T get(int id);
+	int get(T item);
 private:
 	std::vector<T> m_pointer_list;
 };
@@ -58,8 +59,37 @@ T PointerManager<T>::get(int id) {
 	return m_pointer_list[id];
 }
 
+template <class T>
+int PointerManager<T>::get(T item) {
+	if (m_pointer_list.empty()) return -1;
+
+	const int size = m_pointer_list.size();
+	for (int i = 0; i < size; ++i) {
+		if (m_pointer_list[i] == item) {
+			return i;
+		}
+	}
+
+	return -1;
+}
+
 PointerManager<RtMidiIn*> midi_in_ptrs;
 PointerManager<RtMidiOut*> midi_out_ptrs;
+
+void midi_in_callback(double deltatime, std::vector< unsigned char > *message, void *userData)
+{
+	GMLevent e("MIDI");
+	RtMidiIn* m = (RtMidiIn*)userData;
+
+	e.add_var("id", midi_in_ptrs.get(m));
+	e.add_var("status", (int)message->at(0));
+	e.add_var("byte1", (int)message->at(1));
+	if (message->size() > 2) {
+		e.add_var("byte2", (int)message->at(2));
+	}
+	e.trigger();
+
+}
 
 GMS_DLL double midi_in_create() {
 	return midi_in_ptrs.add(new RtMidiIn());
@@ -99,6 +129,20 @@ GMS_DLL const char* midi_in_get_port_name(double midi_in_id) {
 	RtMidiIn* midi_in = midi_in_ptrs.get(midi_in_id);
 	if (midi_in == nullptr) return "";
 	return midi_in->getPortName().c_str();
+}
+
+GMS_DLL double midi_in_set_callback(double midi_in_id) {
+	RtMidiIn* midi_in = midi_in_ptrs.get(midi_in_id);
+	if (midi_in == nullptr) return -1;
+	midi_in->setCallback(midi_in_callback, midi_in_ptrs.get(midi_in_id));
+	return 0;
+}
+
+GMS_DLL double midi_in_cancel_callback(double midi_in_id) {
+	RtMidiIn* midi_in = midi_in_ptrs.get(midi_in_id);
+	if (midi_in == nullptr) return -1;
+	midi_in->cancelCallback();
+	return 0;
 }
 
 GMS_DLL double midi_out_create() {
