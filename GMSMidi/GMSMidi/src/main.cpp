@@ -73,8 +73,21 @@ int PointerManager<T>::get(T item) {
 	return -1;
 }
 
+class MIDICallbackData {
+public:
+	MIDICallbackData(RtMidiIn* midi, int script):m_midi_ptr(midi), m_script_index(script) {}
+	inline RtMidiIn* get_midi() { return m_midi_ptr; }
+	inline int get_script() { return m_script_index; }
+private:
+	RtMidiIn* m_midi_ptr;
+	int m_script_index;
+};
+
 PointerManager<RtMidiIn*> midi_in_ptrs;
 PointerManager<RtMidiOut*> midi_out_ptrs;
+PointerManager<MIDICallbackData*> midi_callback_ptrs;
+
+
 
 void midi_in_callback(double deltatime, std::vector< unsigned char > *message, void *userData)
 {
@@ -131,14 +144,15 @@ GMS_DLL const char* midi_in_get_port_name(double midi_in_id) {
 	return midi_in->getPortName().c_str();
 }
 
-GMS_DLL double midi_in_set_callback(double midi_in_id) {
+GMS_DLL double midi_in_start_streaming(double midi_in_id) {
 	RtMidiIn* midi_in = midi_in_ptrs.get(midi_in_id);
 	if (midi_in == nullptr) return -1;
-	midi_in->setCallback(midi_in_callback, midi_in_ptrs.get(midi_in_id));
+
+	midi_in->setCallback(midi_in_callback, midi_in);
 	return 0;
 }
 
-GMS_DLL double midi_in_cancel_callback(double midi_in_id) {
+GMS_DLL double midi_in_stop_streaming(double midi_in_id) {
 	RtMidiIn* midi_in = midi_in_ptrs.get(midi_in_id);
 	if (midi_in == nullptr) return -1;
 	midi_in->cancelCallback();
