@@ -138,10 +138,10 @@ GMS_DLL double midi_in_get_port_count(double midi_in_id) {
 	return midi_in->getPortCount();
 }
 
-GMS_DLL const char* midi_in_get_port_name(double midi_in_id) {
+GMS_DLL const char* midi_in_get_port_name(double midi_in_id, double port_id) {
 	RtMidiIn* midi_in = midi_in_ptrs.get(midi_in_id);
 	if (midi_in == nullptr) return "";
-	return midi_in->getPortName().c_str();
+	return midi_in->getPortName(port_id).c_str();
 }
 
 GMS_DLL double midi_in_start_streaming(double midi_in_id) {
@@ -167,3 +167,47 @@ GMS_DLL double midi_out_destroy(double id) {
 	return midi_out_ptrs.remove(id);
 }
 
+GMS_DLL double midi_out_open_port(double midi_out_id, double port_id) {
+	RtMidiOut* midi_out = midi_out_ptrs.get(midi_out_id);
+	if (midi_out == nullptr) return -1;
+	midi_out->openPort(port_id);
+	return 0;
+}
+
+GMS_DLL double midi_out_close_port(double midi_out_id) {
+	RtMidiOut* midi_out = midi_out_ptrs.get(midi_out_id);
+	if (midi_out == nullptr) return -1;
+	midi_out->closePort();
+	return 0.0;
+}
+
+GMS_DLL double midi_out_is_port_open(double midi_out_id) {
+	RtMidiOut* midi_out = midi_out_ptrs.get(midi_out_id);
+	if (midi_out == nullptr) return -1;
+	return midi_out->isPortOpen() ? GMS_TRUE : GMS_FALSE;
+}
+
+GMS_DLL double midi_out_get_port_count(double midi_out_id) {
+	RtMidiOut* midi_out = midi_out_ptrs.get(midi_out_id);
+	if (midi_out == nullptr) return -1;
+	return midi_out->getPortCount();
+}
+
+GMS_DLL const char* midi_out_get_port_name(double midi_out_id, double port_id) {
+	RtMidiOut* midi_out = midi_out_ptrs.get(midi_out_id);
+	if (midi_out == nullptr) return "";
+	return midi_out->getPortName(port_id).c_str();
+}
+
+GMS_DLL double midi_out_send_message(double midi_out_id, double status, double byte1, double byte2) {
+	RtMidiOut* midi_out = midi_out_ptrs.get(midi_out_id);
+	if (midi_out == nullptr) return -1;
+
+	std::vector<unsigned char> message;
+	message[0] = status;
+	message[1] = byte1;
+	message[2] = byte2;
+	midi_out->sendMessage(&message);
+
+	return 0;
+}

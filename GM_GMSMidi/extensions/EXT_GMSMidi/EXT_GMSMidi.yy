@@ -44,7 +44,8 @@
         {"externalName":"midi_in_get_port_count","kind":1,"help":"midi_in_get_port_count(id)","hidden":false,"returnType":2,"argCount":0,"args":[
             2,
           ],"resourceVersion":"1.0","name":"midi_in_get_port_count","tags":[],"resourceType":"GMExtensionFunction",},
-        {"externalName":"midi_in_get_port_name","kind":1,"help":"midi_in_get_port_name(id)","hidden":false,"returnType":1,"argCount":0,"args":[
+        {"externalName":"midi_in_get_port_name","kind":1,"help":"midi_in_get_port_name(midi_id,port_id)","hidden":false,"returnType":1,"argCount":0,"args":[
+            2,
             2,
           ],"resourceVersion":"1.0","name":"midi_in_get_port_name","tags":[],"resourceType":"GMExtensionFunction",},
         {"externalName":"midi_in_start_streaming","kind":1,"help":"midi_in_start_streaming(id)","hidden":false,"returnType":2,"argCount":0,"args":[
@@ -53,6 +54,29 @@
         {"externalName":"midi_in_stop_streaming","kind":1,"help":"midi_in_stop_streaming(id)","hidden":false,"returnType":2,"argCount":0,"args":[
             2,
           ],"resourceVersion":"1.0","name":"midi_in_stop_streaming","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"midi_out_open_port","kind":1,"help":"midi_out_open_port(midi_id,port_id)","hidden":false,"returnType":2,"argCount":0,"args":[
+            2,
+            2,
+          ],"resourceVersion":"1.0","name":"midi_out_open_port","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"midi_out_close_port","kind":1,"help":"midi_out_close_port(id)","hidden":false,"returnType":2,"argCount":0,"args":[
+            2,
+          ],"resourceVersion":"1.0","name":"midi_out_close_port","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"midi_out_is_port_open","kind":1,"help":"midi_out_is_port_open(id)","hidden":false,"returnType":2,"argCount":0,"args":[
+            2,
+          ],"resourceVersion":"1.0","name":"midi_out_is_port_open","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"midi_out_get_port_count","kind":1,"help":"midi_out_get_port_count(id)","hidden":false,"returnType":2,"argCount":0,"args":[
+            2,
+          ],"resourceVersion":"1.0","name":"midi_out_get_port_count","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"midi_out_get_port_name","kind":1,"help":"midi_out_get_port_name(midi_id,port_id)","hidden":false,"returnType":1,"argCount":0,"args":[
+            2,
+            2,
+          ],"resourceVersion":"1.0","name":"midi_out_get_port_name","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"midi_out_send_message","kind":1,"help":"midi_out_send_message(id,status,byte1,byte2)","hidden":false,"returnType":2,"argCount":0,"args":[
+            2,
+            2,
+            2,
+            2,
+          ],"resourceVersion":"1.0","name":"midi_out_send_message","tags":[],"resourceType":"GMExtensionFunction",},
       ],"constants":[],"ProxyFiles":[],"copyToTargets":-1,"order":[
         {"name":"RegisterCallbacks","path":"extensions/EXT_GMSMidi/EXT_GMSMidi.yy",},
         {"name":"midi_in_create","path":"extensions/EXT_GMSMidi/EXT_GMSMidi.yy",},
@@ -66,6 +90,12 @@
         {"name":"midi_in_get_port_name","path":"extensions/EXT_GMSMidi/EXT_GMSMidi.yy",},
         {"name":"midi_in_start_streaming","path":"extensions/EXT_GMSMidi/EXT_GMSMidi.yy",},
         {"name":"midi_in_stop_streaming","path":"extensions/EXT_GMSMidi/EXT_GMSMidi.yy",},
+        {"name":"midi_out_open_port","path":"extensions/EXT_GMSMidi/EXT_GMSMidi.yy",},
+        {"name":"midi_out_close_port","path":"extensions/EXT_GMSMidi/EXT_GMSMidi.yy",},
+        {"name":"midi_out_is_port_open","path":"extensions/EXT_GMSMidi/EXT_GMSMidi.yy",},
+        {"name":"midi_out_get_port_count","path":"extensions/EXT_GMSMidi/EXT_GMSMidi.yy",},
+        {"name":"midi_out_get_port_name","path":"extensions/EXT_GMSMidi/EXT_GMSMidi.yy",},
+        {"name":"midi_out_send_message","path":"extensions/EXT_GMSMidi/EXT_GMSMidi.yy",},
       ],"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMExtensionFile",},
   ],
   "classname": "",
