@@ -73,19 +73,8 @@ int PointerManager<T>::get(T item) {
 	return -1;
 }
 
-class MIDICallbackData {
-public:
-	MIDICallbackData(RtMidiIn* midi, int script):m_midi_ptr(midi), m_script_index(script) {}
-	inline RtMidiIn* get_midi() { return m_midi_ptr; }
-	inline int get_script() { return m_script_index; }
-private:
-	RtMidiIn* m_midi_ptr;
-	int m_script_index;
-};
-
 PointerManager<RtMidiIn*> midi_in_ptrs;
 PointerManager<RtMidiOut*> midi_out_ptrs;
-PointerManager<MIDICallbackData*> midi_callback_ptrs;
 
 
 
